@@ -1,22 +1,13 @@
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.switch import Switch
+
+from Domain.Grid import Grid, GridItem, GridItemType, GridPosition
 from ..Resources.Images import Images
 from .GridWidget import GridWidget
 from .TouchFeedbackWidget import TouchFeedbackWidget
-from Domain.Grid import Grid, GridItem, GridItemType, GridPosition
-from kivy.properties import ObjectProperty
+from .MenuWidget import MenuWidget
 
 from random import choice
-
-class MenuWidget(Widget):   
-    followWormSwitch = ObjectProperty(None) 
-
-    def __init__(self):
-        super().__init__()
-        print(self.followWormSwitch)
 
 class TurtleGameWidget(Widget):
     turtleWidget = Image(source=Images.turtle.value)

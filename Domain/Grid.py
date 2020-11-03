@@ -1,31 +1,8 @@
-from enum import Enum
 from .Direction import Direction
-
-class GridItemType(Enum): 
-    EMPTY = 0
-    WALL = 1
-
-class GridItem:
-    def __init__(self, position, itemType):
-        self.itemType = itemType
-        self.position = position
-
-class CostGridItem:
-    def __init__(self, estimatedDistanceToEnd, distanceToBegin, position, parentItem):
-        self.estimatedDistanceToEnd = estimatedDistanceToEnd
-        self.distanceToBegin = distanceToBegin
-        self.cost = estimatedDistanceToEnd + distanceToBegin
-        self.position = position
-        self.parentItem = parentItem
-
-class GridPosition:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-    def __str__(self):
-        return "{x: " + str(self.x) + ", y: " + str(self.y) + "}" 
-    def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+from .GridItemType import GridItemType
+from .GridItem import GridItem
+from .CostGridItem import CostGridItem
+from .GridPosition import GridPosition
 
 class Grid: 
     def __init__(self, gridWidth, gridHeight, initialState):
