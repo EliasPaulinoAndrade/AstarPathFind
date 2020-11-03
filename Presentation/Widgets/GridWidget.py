@@ -14,9 +14,6 @@ class GridWidget(Widget):
         self.canAnimate = True
 
     def on_size_update(self):
-        gridSize = min(self.parent.size[0], self.parent.size[1])
-        self.width = self.height = gridSize
-        self.center = self.parent.center
         self.drawGrid()
         self.updateWidgetsPositions()
 
@@ -36,7 +33,7 @@ class GridWidget(Widget):
         (columnWidth, lineHeight) = self.gridItemSize()
         return (self.pos[0] + columnWidth * gridPosition[0], self.pos[1] + lineHeight * gridPosition[1])
 
-    def moveWidgetInSequence(self, widget, sequence):
+    def moveWidgetInSequence(self, widget, sequence, didFinishSequenceAnimation):
         widgetPosition = self.getWidgetPosition(widget)
 
         if widgetPosition == None: 
@@ -45,16 +42,21 @@ class GridWidget(Widget):
         if not self.canAnimate:
             return
 
+        if len(sequence) == 0:
+            didFinishSequenceAnimation(widget)
+            return
+
         animations = [Animation(x = position[0], y = position[1], duration = 0.2) for position in [self.positionForGridPosition(gridPosition) for gridPosition in sequence]]
         aninationsSequence = AnimationListSequence(animations)
-        aninationsSequence.sequence.bind(on_complete=lambda _, __: self.finishAnimation(widget, sequence[-1]))
+        aninationsSequence.sequence.bind(on_complete=lambda _, __: self.finishAnimation(widget, sequence[-1], didFinishSequenceAnimation))
         
         aninationsSequence.sequence.start(widget)
         self.canAnimate = False
 
-    def finishAnimation(self, widget, targetPosition):
+    def finishAnimation(self, widget, targetPosition, didFinishSequenceAnimation):
         self.canAnimate = True
         self.moveWidgetToGridPosition(widget, targetPosition)
+        didFinishSequenceAnimation(widget)
 
     def addWidgetToGridPosition(self, widget, gridPosition):
         self.setPositionForWidgetAtGridPosition(widget, gridPosition)

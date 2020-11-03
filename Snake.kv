@@ -5,3 +5,21 @@
         Rectangle:
             pos: self.pos
             size: self.size
+
+<MenuWidget>:
+    followRatSwitch: follow_switch
+    canvas:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'horizontal'
+        size: self.parent.size
+        center: self.parent.center
+        Label:
+            text: 'Automatic Follow The Rat'
+        Switch:
+            id: follow_switch
+            

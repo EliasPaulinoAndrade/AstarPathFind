@@ -12,6 +12,8 @@ class GridItem:
 
 class CostGridItem:
     def __init__(self, estimatedDistanceToEnd, distanceToBegin, position, parentItem):
+        self.estimatedDistanceToEnd = estimatedDistanceToEnd
+        self.distanceToBegin = distanceToBegin
         self.cost = estimatedDistanceToEnd + distanceToBegin
         self.position = position
         self.parentItem = parentItem
@@ -42,6 +44,9 @@ class Grid:
         if position.x < self.gridWidth and position.x >= 0 and position.y < self.gridHeight and position.y >= 0:
              return GridItem(GridPosition(position.x, position.y), GridItemType(self.grid[position.y][position.x]))
         return None
+
+    def emptyGridItems(self):
+        return [gridItem for gridItem in self if gridItem.itemType == GridItemType.EMPTY]
 
     def findPath(self, startPosition, endPosition): 
         if self[startPosition].itemType == GridItemType.WALL.value or self[endPosition].itemType == GridItemType.WALL.value: 
@@ -96,10 +101,12 @@ class Grid:
         return itemAtPosition != None and itemAtPosition.itemType != GridItemType.WALL
 
     def costItemAtPosition(position, startPosition, endPosition, parentNode):
-        return CostGridItem(Grid.distance(position, startPosition), Grid.distance(position, endPosition), position, parentNode)
+        if parentNode is None:
+            return CostGridItem(0, Grid.estimatedDistance(position, endPosition), position, parentNode)
+        return CostGridItem(parentNode.distanceToBegin + 1, Grid.estimatedDistance(position, endPosition), position, parentNode)
 
-    def distance(fromPosition, toPosition):
-        return abs(fromPosition.x - toPosition.x) + abs(fromPosition.y - toPosition.y)
+    def estimatedDistance(fromPosition, toPosition):
+        return pow(fromPosition.x - toPosition.x, 2) + pow(fromPosition.y - toPosition.y, 2)
 
     def positionAtDirection(position, direction):
         return GridPosition(position.x + direction.value[0], position.y + direction.value[1])
