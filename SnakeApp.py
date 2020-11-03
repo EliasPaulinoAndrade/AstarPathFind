@@ -1,12 +1,12 @@
 from kivy.app import App
-from SnakeGame import SnakeGame
+from TurtleGame import TurtleGame
 from kivy.clock import Clock
 
-class SnakeApp(App):
+class TurtleApp(App):
 
     def build(self):
-        snakeGame = SnakeGame()
-        return snakeGame
+        turtleGame = TurtleGame()
+        return turtleGame
 
 if __name__ == '__main__':
-    SnakeApp().run()
+    TurtleApp().run()
