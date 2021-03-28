@@ -1,7 +1,7 @@
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 
-from Domain.Grid import Grid, GridItem, GridItemType, GridPosition
+from Domain.Grid import GridItemType, GridPosition
 from ..Resources.Images import Images
 from .GridWidget import GridWidget
 from .TouchFeedbackWidget import TouchFeedbackWidget
@@ -35,8 +35,7 @@ class TurtleGameWidget(Widget):
     def on_size_update(self, width, height):
         gridSize = min(self.size[0], self.size[1])
         menuHeight = 100
-        turtleGridHeight = gridSize - menuHeight
-
+        
         self.gridWidget.width = gridSize
         self.gridWidget.height = gridSize - menuHeight
         self.gridWidget.center_x = self.center_x

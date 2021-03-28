@@ -1,7 +1,6 @@
 from kivy.uix.widget import Widget
 from kivy.graphics import Line
 from kivy.graphics import Color, Rectangle
-from Domain.Direction import Direction
 from kivy.animation import Animation
 
 class GridWidget(Widget):
